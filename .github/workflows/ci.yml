@@ -1,11 +1,14 @@
+on: [pull_request]
 
-name: CI
-on: [push]
 jobs:
-  test:
-    name: test
+  deploy:
     runs-on: ubuntu-latest
-    container: ubuntu:20.04
     steps:
-      - run: |
-          echo ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          publish_branch: foobar
